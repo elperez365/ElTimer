@@ -7,9 +7,6 @@ import { TrainingContext } from "./TrainingContext";
 
 const GymTimer = () => {
   const [trainingData, setTrainingData] = React.useContext(TrainingContext);
-  const [localSets, setLocalSets] = React.useState("");
-  const [localReps, setLocalReps] = React.useState("");
-  const [localRest, setLocalRest] = React.useState("");
 
   const [start, setStart] = React.useState(false);
   const navigate = useNavigate();
@@ -17,13 +14,13 @@ const GymTimer = () => {
   const handleChanges = (e) => {
     switch (e.target.name) {
       case "sets":
-        setLocalSets(e.target.value);
+        setTrainingData((prevData) => ({ ...prevData, sets: e.target.value }));
         break;
       case "reps":
-        setLocalReps(e.target.value);
+        setTrainingData((prevData) => ({ ...prevData, reps: e.target.value }));
         break;
       case "rest":
-        setLocalRest(e.target.value);
+        setTrainingData((prevData) => ({ ...prevData, rest: e.target.value }));
         break;
       default:
         break;
@@ -31,21 +28,34 @@ const GymTimer = () => {
   };
 
   const handleStart = () => {
-    if (localSets === "" || localReps === "" || localRest === "") {
+    if (
+      trainingData.sets === "" ||
+      trainingData.reps === "" ||
+      trainingData.rest === ""
+    ) {
       alert("Please fill all the fields");
       return;
-    } else if (localSets <= 0 || localReps <= 0 || localRest <= 0) {
+    } else if (
+      trainingData.sets <= 0 ||
+      trainingData.reps <= 0 ||
+      trainingData.rest <= 0
+    ) {
       alert("Please fill all the fields with a number greater than 0");
       return;
-    } else if (localSets > 100 || localReps > 100 || localRest > 100) {
+    } else if (
+      trainingData.sets > 100 ||
+      trainingData.reps > 100 ||
+      trainingData.rest > 100
+    ) {
       alert("Please fill all the fields with a number lower than 100");
       return;
     } else {
-      trainingData.sets = localSets;
-      trainingData.reps = localReps;
-      trainingData.rest = localRest;
-      console.log("trainingData", trainingData);
-      setTrainingData(trainingData);
+      setTrainingData((prevData) => ({
+        ...prevData,
+        sets: parseInt(prevData.sets),
+        reps: parseInt(prevData.reps),
+        rest: parseInt(prevData.rest),
+      }));
       setStart(true);
       navigate("/training");
     }
@@ -73,7 +83,7 @@ const GymTimer = () => {
           id="outlined-basic"
           label="Sets"
           name="sets"
-          value={localSets}
+          value={trainingData.sets}
           variant="outlined"
           onChange={handleChanges}
         />
@@ -81,7 +91,7 @@ const GymTimer = () => {
           id="outlined-basic"
           label="Reps"
           name="reps"
-          value={localReps}
+          value={trainingData.reps}
           variant="outlined"
           onChange={handleChanges}
         />
@@ -89,7 +99,7 @@ const GymTimer = () => {
           id="outlined-basic"
           label="Rest"
           name="rest"
-          value={localRest}
+          value={trainingData.rest}
           variant="outlined"
           onChange={handleChanges}
         />

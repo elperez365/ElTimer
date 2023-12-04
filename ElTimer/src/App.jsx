@@ -2,6 +2,8 @@ import "./App.css";
 import React from "react";
 import GymTimer from "./GymTimer";
 import { TrainingContext } from "./TrainingContext";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Training from "./Training";
 
 //Purpouse: To create a timer for the gym, that notify you every rep, notify start and end of rest time, notify as well 5 seconds before the end of the rest time, and notify the end of the set.
 //The timer should be able to be setted by the user, so he can choose the number of sets, the number of reps, the type of reps (normal, double time, triple time), the rest time between sets.
@@ -18,11 +20,12 @@ function App() {
   });
   return (
     <TrainingContext.Provider value={[trainingData, setTrainingData]}>
-      <>
-        <div className="App">
-          <GymTimer />
-        </div>
-      </>
+      <Router>
+        <Routes>
+          <Route path="/" element={<GymTimer />} />
+          <Route path="/training" element={<Training />} />
+        </Routes>
+      </Router>
     </TrainingContext.Provider>
   );
 }

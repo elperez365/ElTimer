@@ -31,12 +31,24 @@ const GymTimer = () => {
   };
 
   const handleStart = () => {
-    // Validation logic here if needed
-    trainingData.sets = localSets;
-    trainingData.reps = localReps;
-    trainingData.rest = localRest;
-    console.log("trainingData", trainingData);
-    navigate("/training");
+    if (localSets === "" || localReps === "" || localRest === "") {
+      alert("Please fill all the fields");
+      return;
+    } else if (localSets <= 0 || localReps <= 0 || localRest <= 0) {
+      alert("Please fill all the fields with a number greater than 0");
+      return;
+    } else if (localSets > 100 || localReps > 100 || localRest > 100) {
+      alert("Please fill all the fields with a number lower than 100");
+      return;
+    } else {
+      trainingData.sets = localSets;
+      trainingData.reps = localReps;
+      trainingData.rest = localRest;
+      console.log("trainingData", trainingData);
+      setTrainingData(trainingData);
+      setStart(true);
+      navigate("/training");
+    }
   };
 
   return (

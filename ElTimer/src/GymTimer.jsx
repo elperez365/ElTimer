@@ -82,7 +82,7 @@ const GymTimer = () => {
           label="Reps"
           name="reps"
           value={localReps}
-          variant="filled"
+          variant="outlined"
           onChange={handleChanges}
         />
         <TextField
@@ -90,7 +90,7 @@ const GymTimer = () => {
           label="Rest"
           name="rest"
           value={localRest}
-          variant="standard"
+          variant="outlined"
           onChange={handleChanges}
         />
 

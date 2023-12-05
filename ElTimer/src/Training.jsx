@@ -69,7 +69,7 @@ const Training = () => {
       clearTimeout(timer);
       console.log("Training component unmounted. Timers cleared.");
     };
-  }, []);
+  }, [trainingData.sets]);
 
   const handleTrainingPause = () => {
     setIsPaused(!isPaused);

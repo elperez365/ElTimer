@@ -10,6 +10,7 @@ function App() {
     sets: "",
     reps: "",
     rest: "",
+    repLength: 2,
   });
   return (
     <TrainingContext.Provider value={[trainingData, setTrainingData]}>

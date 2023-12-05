@@ -21,6 +21,13 @@ const GymTimer = () => {
       case "rest":
         setTrainingData((prevData) => ({ ...prevData, rest: e.target.value }));
         break;
+
+      case "repLength":
+        setTrainingData((prevData) => ({
+          ...prevData,
+          repLength: e.target.value,
+        }));
+        break;
       default:
         break;
     }
@@ -91,6 +98,14 @@ const GymTimer = () => {
           label="Reps"
           name="reps"
           value={trainingData.reps}
+          variant="outlined"
+          onChange={handleChanges}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Reps Seconds"
+          name="repLength"
+          value={trainingData.repLength}
           variant="outlined"
           onChange={handleChanges}
         />

@@ -4,6 +4,7 @@ import "./styles/Training.css";
 import { useNavigate } from "react-router-dom";
 import useSound from "use-sound";
 import repSound from "./sounds/rep-sound.wav";
+import restStart from "./sounds/countdown-start.wav";
 
 const Training = () => {
   const [trainingData, setTrainingData] = React.useContext(TrainingContext);
@@ -11,10 +12,12 @@ const Training = () => {
   const exerciseTimerRef = useRef(null);
   const restTimerRef = useRef(null);
   const [play] = useSound(repSound);
+  const [playRest] = useSound(restStart);
 
   const originalSetsRef = useRef(trainingData.sets);
   const originalRepsRef = useRef(trainingData.reps);
   const initialRestRef = useRef(trainingData.rest);
+  const initialRepLengthRef = useRef(trainingData.repLength);
 
   const navigate = useNavigate();
 
@@ -59,7 +62,7 @@ const Training = () => {
           return { ...prevState };
         }
       });
-    }, 2000);
+    }, initialRepLengthRef.current * 1000);
   };
 
   useEffect(() => {
@@ -101,6 +104,14 @@ const Training = () => {
       play();
     }
   }, [trainingData.reps, play]);
+
+  //play sound when rest starts decrementing from initial value and when it resets
+
+  useEffect(() => {
+    if (trainingData.rest === initialRestRef.current) {
+      playRest();
+    }
+  }, [trainingData.rest, playRest]);
 
   return (
     <div id="training-container">

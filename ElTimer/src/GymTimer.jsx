@@ -8,7 +8,6 @@ import { TrainingContext } from "./TrainingContext";
 const GymTimer = () => {
   const [trainingData, setTrainingData] = React.useContext(TrainingContext);
 
-  const [start, setStart] = React.useState(false);
   const navigate = useNavigate();
 
   const handleChanges = (e) => {
@@ -56,7 +55,7 @@ const GymTimer = () => {
         reps: parseInt(prevData.reps),
         rest: parseInt(prevData.rest),
       }));
-      setStart(true);
+
       navigate("/training");
     }
   };

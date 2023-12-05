@@ -1,16 +1,19 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { TrainingContext } from "./TrainingContext";
 import "./styles/Training.css";
+import { useNavigate } from "react-router-dom";
 
 const Training = () => {
   const [trainingData, setTrainingData] = React.useContext(TrainingContext);
-  const [isPaused, setIsPaused] = React.useState(false);
   const [aboutToStart, setAboutToStart] = React.useState(false);
   const exerciseTimerRef = useRef(null);
   const restTimerRef = useRef(null);
 
+  const originalSetsRef = useRef(trainingData.sets);
   const originalRepsRef = useRef(trainingData.reps);
   const initialRestRef = useRef(trainingData.rest);
+
+  const navigate = useNavigate();
 
   const startRest = () => {
     // Clear any existing rest timer
@@ -69,10 +72,24 @@ const Training = () => {
       clearTimeout(timer);
       console.log("Training component unmounted. Timers cleared.");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trainingData.sets]);
 
-  const handleTrainingPause = () => {
-    setIsPaused(!isPaused);
+  const handleRestart = () => {
+    setTrainingData({
+      sets: originalSetsRef.current,
+      reps: originalRepsRef.current,
+      rest: initialRestRef.current,
+    });
+  };
+
+  const handleReset = () => {
+    setTrainingData({
+      sets: "",
+      reps: "",
+      rest: "",
+    });
+    navigate("/");
   };
 
   return (
@@ -88,12 +105,9 @@ const Training = () => {
           <p>Sets: {trainingData.sets}</p>
           <p>Reps: {trainingData.reps}</p>
           <p>Rest: {trainingData.rest}</p>
-          <button onClick={handleTrainingPause}>
-            {!isPaused ? "Pause" : "Resume"}
-          </button>
-          <button>Restart</button>
-          <button>Reset</button>
-          <button>Stop</button>{" "}
+          <button onClick={handleRestart}>Restart</button>
+          <button onClick={handleReset}>Reset</button>
+          <button onClick={() => alert("Training stopped")}>Stop</button>{" "}
         </div>
       )}
     </div>

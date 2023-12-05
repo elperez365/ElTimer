@@ -2,12 +2,15 @@ import React, { useEffect, useRef } from "react";
 import { TrainingContext } from "./TrainingContext";
 import "./styles/Training.css";
 import { useNavigate } from "react-router-dom";
+import useSound from "use-sound";
+import repSound from "./sounds/rep-sound.wav";
 
 const Training = () => {
   const [trainingData, setTrainingData] = React.useContext(TrainingContext);
   const [aboutToStart, setAboutToStart] = React.useState(false);
   const exerciseTimerRef = useRef(null);
   const restTimerRef = useRef(null);
+  const [play] = useSound(repSound);
 
   const originalSetsRef = useRef(trainingData.sets);
   const originalRepsRef = useRef(trainingData.reps);
@@ -91,6 +94,13 @@ const Training = () => {
     });
     navigate("/");
   };
+
+  //play sound when reps are decremented
+  useEffect(() => {
+    if (trainingData.reps >= 0) {
+      play();
+    }
+  }, [trainingData.reps, play]);
 
   return (
     <div id="training-container">

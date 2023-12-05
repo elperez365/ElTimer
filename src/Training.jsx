@@ -123,12 +123,23 @@ const Training = () => {
       {aboutToStart && (
         <div>
           <h2>Training Page</h2>
-          <p>Sets: {trainingData.sets}</p>
-          <p>Reps: {trainingData.reps}</p>
-          <p>Rest: {trainingData.rest}</p>
-          <button onClick={handleRestart}>Restart</button>
-          <button onClick={handleReset}>Reset</button>
-          <button onClick={() => alert("Training stopped")}>Stop</button>{" "}
+          <p>
+            <strong>Sets: </strong>
+            {trainingData.sets}
+          </p>
+          <p>
+            <strong>Reps:</strong> {trainingData.reps}
+          </p>
+          <p>
+            <strong>Rest: </strong>
+            {trainingData.rest}
+          </p>
+          <div id="action-buttons">
+            {" "}
+            <button onClick={handleRestart}>Restart</button>
+            <button onClick={handleReset}>Reset</button>
+            <button onClick={() => alert("Training stopped")}>Stop</button>{" "}
+          </div>
         </div>
       )}
     </div>

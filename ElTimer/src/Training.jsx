@@ -21,8 +21,8 @@ const Training = () => {
           clearInterval(restTimerRef.current);
           // Reset rest to initial value when rest reaches 0
           return {
-            ...prevState,
             reps: initialRepsRef.current,
+            sets: prevState.sets > 0 ? prevState.sets - 1 : 0,
             rest: initialRestRef.current,
           };
         }
@@ -37,15 +37,15 @@ const Training = () => {
           return { ...prevState, reps: prevState.reps - 1 };
         } else if (prevState.sets > 0) {
           clearInterval(exerciseTimerRef.current);
+          // Reset reps to initial value and start rest
           startRest();
           return {
             ...prevState,
             reps: initialRepsRef.current,
-            sets: prevState.sets - 1,
           };
         } else {
           clearInterval(exerciseTimerRef.current);
-          clearInterval(restTimerRef.current); // Stop the rest timer
+          clearInterval(restTimerRef.current);
           return { ...prevState };
         }
       });

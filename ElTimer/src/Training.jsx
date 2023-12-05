@@ -9,19 +9,23 @@ const Training = () => {
   const exerciseTimerRef = useRef(null);
   const restTimerRef = useRef(null);
 
-  const initialRepsRef = useRef(trainingData.reps);
+  const originalRepsRef = useRef(trainingData.reps);
   const initialRestRef = useRef(trainingData.rest);
 
   const startRest = () => {
+    // Clear any existing rest timer
+    clearInterval(restTimerRef.current);
+
+    // Start a new rest timer
     restTimerRef.current = setInterval(() => {
       setTrainingData((prevState) => {
         if (prevState.rest > 0) {
           return { ...prevState, rest: prevState.rest - 1 };
         } else {
-          clearInterval(restTimerRef.current);
           // Reset rest to initial value when rest reaches 0
+          clearInterval(restTimerRef.current);
           return {
-            reps: initialRepsRef.current,
+            reps: originalRepsRef.current,
             sets: prevState.sets > 0 ? prevState.sets - 1 : 0,
             rest: initialRestRef.current,
           };
@@ -41,7 +45,7 @@ const Training = () => {
           startRest();
           return {
             ...prevState,
-            reps: initialRepsRef.current,
+            reps: originalRepsRef.current,
           };
         } else {
           clearInterval(exerciseTimerRef.current);
